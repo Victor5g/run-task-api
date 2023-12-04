@@ -1,16 +1,4 @@
-<p align="center">
-  <img title="a title" alt="Alt text" src="https://media.licdn.com/dms/image/D4E16AQGjCVuzlCthvg/profile-displaybackgroundimage-shrink_200_800/0/1690574706700?e=2147483647&v=beta&t=zlY1Mc10yQ3gA9qiZ4sZ7m8PkE-HIu8Haa1fUyKb_fU">
-</p>
-
-# Desafio Backend | NodeJS
-
-Olá, candidato! Se você chegou até aqui, é porque demonstrou interesse em fazer parte do nosso time. Preparamos um desafio para entendermos um pouco mais sobre suas habilidades como desenvolvedor backend em NodeJS.
-
-## 🚀 Objetivo:
-
-Desenvolver uma API para gerenciar um sistema de tarefas e projetos, permitindo que usuários criem projetos e associem tarefas a eles.
-
-## 📖 Regras de Negócio:
+## 📖 Regras API:
 
 1. Somente o criador do projeto pode adicionar ou remover membros.
 2. Tarefas só podem ser criadas por membros do projeto ao qual a tarefa pertence.
@@ -24,15 +12,7 @@ Desenvolver uma API para gerenciar um sistema de tarefas e projetos, permitindo 
 - PostgreSQL
 - Prisma ORM
 
-## 📜 Requisitos:
-
-### 1. Configuração Inicial:
-
-- Configurar um projeto usando Node.js e TypeScript.
-- Configurar um banco de dados PostgreSQL (Local).
-- Utilizar o Prisma como ORM.
-
-### 2. Modelo de Dados:
+### </>. Modelagem da API:
 
 #### Usuário (`User`):
 
@@ -67,28 +47,3 @@ Desenvolver uma API para gerenciar um sistema de tarefas e projetos, permitindo 
 
 - Implemente validações para garantir a integridade dos dados.
 - Responda com mensagens de erro claras e status HTTP apropriados.
-
-## 🥇 Diferenciais:
-
-- Testes unitários e/ou de integração.
-- Documentação com Swagger.
-- Paginação nos endpoints.
-- Registro de logs.
-- Dockerização da aplicação.
-- Uso de um linter (como ESLint) e formatador de código (como Prettier).
-
-## 🗳️ Instruções de Submissão:
-
-1. Faça um fork deste repositório para sua conta pessoal do GitHub.
-2. Commit e push suas mudanças para o seu fork.
-3. Envie um e-mail para [arthur.olga@khipo.com.br] com o link do repositório.
-
-## 🧪 Avaliação:
-
-- Estrutura do código e organização.
-- Uso adequado das ferramentas e tecnologias.
-- Implementação dos requisitos e regras de negócio.
-- Design e usabilidade.
-- Funcionalidades extras (diferenciais).
-
-Boa sorte com o desafio! Estamos ansiosos para ver sua solução.
