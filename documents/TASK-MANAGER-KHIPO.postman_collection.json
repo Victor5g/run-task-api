@@ -1,0 +1,446 @@
+{
+	"info": {
+		"_postman_id": "81c080f5-1583-4054-a89d-174ce1b8faf6",
+		"name": "TASK-MANAGER-KHIPO",
+		"description": "API to manage a system of tasks and projects, allowing users to create projects and associate tasks with them.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23502759"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "LIST USERS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/users",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE USER",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Maltes\",\n        \"email\": \"teste7@gmail.com\",\n        \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/user/653d314a-1c52-4061-aa33-6f64862fdc40",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"653d314a-1c52-4061-aa33-6f64862fdc40"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST USER BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/user/885d13d0-2683-4698-8911-5ef398ddb70a",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"885d13d0-2683-4698-8911-5ef398ddb70a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE USER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Mentildo\",\n    \"email\": \"teste7@gmail.com\",\n    \"password\":\"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/user",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE USER",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/user/653d314a-1c52-4061-aa33-6f64862fdc40",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"user",
+								"653d314a-1c52-4061-aa33-6f64862fdc40"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "System users who manipulate tasks and projects"
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "LIST PROJECTS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/projects",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST PROJECT BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/project/cdbc4503-6789-42ed-bade-e91cc250e517",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project",
+								"cdbc4503-6789-42ed-bade-e91cc250e517"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE PROJECT",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Tim Mesh\",\n    \"description\":\"Sistema de repetidores de banda larga\",\n    \"userId\":\"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/project",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD MEMBER IN PROJECT",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectId\":\"cdbc4503-6789-42ed-bade-e91cc250e517\",\n    \"memberId\":\"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"userId\": \"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/project/add-member",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project",
+								"add-member"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PROJECT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"Algar Speed\",\n    \"description\":\"Sistema de controle de banda para clientes algar\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/project/74c21b23-7d47-487a-877e-034fa303e50a",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project",
+								"74c21b23-7d47-487a-877e-034fa303e50a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE PROJECT",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectId\":\"74c21b23-7d47-487a-877e-034fa303e50a\",\n    \"userId\":\"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/project",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVE MEMBER PROJECT",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectId\":\"cdbc4503-6789-42ed-bade-e91cc250e517\",\n    \"memberId\":\"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"userId\": \"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/project/remove-member",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"project",
+								"remove-member"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Projects created by system users"
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "LIST TASKS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/tasks",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST TASK BY ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectId\": \"74c21b23-7d47-487a-877e-034fa303e50a\",\n    \"userId\": \"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"title\": \"Deploy na AWS com EC2\",\n    \"description\": \"realzar o deploy do app na aws EC2 com docker, NGIX e PostreSQL\",\n    \"tag\": \"DEVELOPER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/task/9f290df7-415d-4759-85c9-f6ca273199b2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"task",
+								"9f290df7-415d-4759-85c9-f6ca273199b2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE TASK",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Deploy na Vercel\",\n    \"description\": \"realzar o deploy do WEB Na vercel\",\n    \"status\": \"IN_PROGRESS\",\n    \"userId\": \"33f67187-3b7d-4e9c-b0a7-73d29f9004fc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/task/d11c618a-b6ce-4609-af3b-0fdb08ca2290",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"task",
+								"d11c618a-b6ce-4609-af3b-0fdb08ca2290"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE TASK",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"projectId\": \"cdbc4503-6789-42ed-bade-e91cc250e517\",\n    \"userId\": \"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"title\": \"Deploy na AWS com EC2\",\n    \"description\": \"realzar o deploy do app na aws EC2 com docker, NGIX e PostreSQL\",\n    \"tag\": \"DEVELOPER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/task",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE TASK",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taskId\": \"c00af10d-6413-478a-9560-20125ced06a7\",\n    \"userId\": \"33f67187-3b7d-4e9c-b0a7-73d29f9004fc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/task",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"task"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Tasks of created projects"
+		}
+	]
+}

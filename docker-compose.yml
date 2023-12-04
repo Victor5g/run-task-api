@@ -1,0 +1,25 @@
+version: '3'
+services:
+ api:
+   build: .
+   ports:
+     - "5000:5000"
+   env_file:
+     - .env
+   volumes:
+     - .:/usr/app
+   depends_on:
+     - db
+   links:
+     - db
+ db:
+   image: postgres
+   restart: unless-stopped
+   env_file:
+     - .env
+   volumes:
+     - dbdata:/var/lib/postgresql/data
+   ports:
+     - "5432:5432"
+volumes:
+ dbdata:

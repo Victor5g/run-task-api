@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String   @id @default(uuid())
+  name     String
+  email    String   @unique
+  password String
+  projects ProjectUser[]
+
+  @@map("user")
+}
+
+model Project {
+  id          String       @id @default(uuid())
+  name        String
+  description String
+  members     ProjectUser[]
+  tasks       Task[]
+  creatorId   String
+  @@map("project")
+}
+
+model ProjectUser {
+  user    User   @relation(fields: [userId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
+
+  userId    String
+  projectId String
+
+  @@id([userId, projectId])
+}
+
+model Task {
+  id         String   @id @default(uuid())
+  title      String   @db.VarChar(255)
+  description String
+  createdAt  DateTime @default(now())
+  status     TaskStatus
+  project    Project  @relation(fields: [projectId], references: [id])
+  projectId  String
+  tags       Tag[]
+
+  @@map("task")
+}
+
+model Tag {
+  id     String  @id @default(uuid())
+  title  String
+  task   Task    @relation(fields: [taskId], references: [id])
+  taskId String
+
+  @@map("tag")
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
