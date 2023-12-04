@@ -1,49 +1,44 @@
-## 📖 Regras API:
+## 📖 API Rules:
 
-1. Somente o criador do projeto pode adicionar ou remover membros.
-2. Tarefas só podem ser criadas por membros do projeto ao qual a tarefa pertence.
-3. Um usuário só pode ser adicionado a um projeto se ele já estiver registrado na plataforma.
-4. Tarefas concluídas não podem ser editadas.
-5. As tarefas precisam ter tags
+1. Only the project creator can add or remove members.
+2. Tasks can only be created by members of the project to which the task belongs.
+3. A user can only be added to a project if they are already registered on the platform.
+4. Completed tasks cannot be edited.
+5. Tasks must have tags
 
-## 💻 Tecnologias:
+## 💻 Technologies:
 
-- Node.js com TypeScript
+- Node.js with TypeScript
 - PostgreSQL
-- Prisma ORM
+- Prism ORM
 
-### </>. Modelagem da API:
+### </>. API Modeling:
 
-#### Usuário (`User`):
+#### User (`User`):
 
-- ID: ID gerado automaticamente.
-- Nome: Texto.
-- Email: Texto, único.
-- Senha: Texto, encriptada.
+- ID: Automatically generated ID.
+- Name: Text.
+- Email: Text, unique.
+- Password: Text, encrypted.
 
-#### Projeto (`Project`):
+#### Project (`Project`):
 
-- ID: ID gerado automaticamente.
-- Nome: Texto.
-- Descrição: Texto.
-- Membros: Lista de usuários associados ao projeto.
+- ID: Automatically generated ID.
+- Name: Text.
+- Description: Text.
+- Members: List of users associated with the project.
 
-#### Tarefa (`Task`):
+#### Task (`Task`):
 
-- ID: ID gerado automaticamente.
-- Título: Texto, máximo de 255 caracteres.
-- Descrição: Texto.
-- Data de criação: Data e hora, gerada automaticamente.
-- Status: Enum (Pendente, Em andamento, Concluída).
-- Projeto: Referência ao projeto ao qual pertence.
+- ID: Automatically generated ID.
+- Title: Text, maximum 255 characters.
+- Description: Text.
+- Creation date: Date and time, automatically generated.
+- Status: Enum (Pending, In progress, Completed).
+- Project: Reference to the project to which it belongs.
 
 #### Tag (`Tag`):
 
-- ID: ID gerado automaticamente.
-- Título: Texto.
-- Tarefa: Referência a tarefa ao qual pertence.
-
-### 4. Validações e Erros:
-
-- Implemente validações para garantir a integridade dos dados.
-- Responda com mensagens de erro claras e status HTTP apropriados.
+- ID: Automatically generated ID.
+- Title: Text.
+- Task: Reference to the task to which it belongs.
