@@ -43,7 +43,7 @@
 - Title: Text.
 - Task: Reference to the task to which it belongs.
 
-## 🛠 Configuration for execution:
+## ⚙️ Configuration for execution:
 
 - Have docker and docker-compose installed.
 - Create a .env file in the project root with the following variables.
