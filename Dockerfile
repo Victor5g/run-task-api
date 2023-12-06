@@ -1,16 +1,13 @@
-# Dockerfile
 FROM node:alpine
 
 WORKDIR /usr/app
 
-COPY package.json yarn.lock ./
+COPY . .
 
-RUN yarn install
+RUN npm install
 
 RUN npx prisma generate
 
-COPY . .
-
 EXPOSE 5000
 
-CMD [ "yarn", "dev" ]
+CMD [ "npm", "run", "dev" ]
