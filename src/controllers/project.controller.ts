@@ -2,31 +2,28 @@ import { Request, Response } from 'express';
 
 import prismaClient from '../database/client';
 
+import { existingUser } from '../services/user.service';
+import {
+    existingProject,
+    isProjectCreator,
+    addMemberInProject,
+    getProjects,
+    removeMember,
+    createNewProject,
+    deleteProjectById,
+    getProjectById,
+    updateProjectInformation,
+} from '../services/project.service';
+
 export const createProject = async (req: Request, res: Response) => {
     try {
         const { name, description, userId } = req.body;
 
-        const userExists = await prismaClient.user.findUnique({
-            where: { id: userId },
-        });
-        if (!userExists) {
+        if (!(await existingUser(userId))) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        const project = await prismaClient.project.create({
-            data: {
-                name,
-                description,
-                creatorId: userId,
-            },
-        });
-
-        await prismaClient.projectUser.create({
-            data: {
-                userId: userId,
-                projectId: project.id,
-            },
-        });
+        const project = await createNewProject(name, description, userId);
 
         res.status(201).json({ message: 'created project', project });
     } catch (error) {
@@ -39,46 +36,22 @@ export const deleteProject = async (req: Request, res: Response) => {
     try {
         const { projectId, userId } = req.body;
 
-        const project = await prismaClient.project.findUnique({
-            where: { id: projectId },
-            include: { members: true },
-        });
-
-        if (!project) {
+        if (!(await existingProject(projectId))) {
             return res.status(404).json({ error: 'Project not found' });
         }
 
-        const user = await prismaClient.user.findUnique({
-            where: { id: userId },
-        });
-
-        if (!user) {
+        if (!(await existingUser(userId))) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        if (project.creatorId !== userId) {
+        if (!(await isProjectCreator(projectId, userId))) {
             return res
                 .status(403)
                 .json({ error: 'Only the project creator performs this action' });
         }
 
-        await prismaClient.projectUser.deleteMany({
-            where: {
-                projectId: projectId,
-            },
-        });
+        await deleteProjectById(projectId);
 
-        await prismaClient.task.deleteMany({
-            where: {
-                projectId: projectId,
-            },
-        });
-
-        await prismaClient.project.delete({
-            where: {
-                id: projectId,
-            },
-        });
         res.sendStatus(204);
     } catch (error) {
         console.log(error);
@@ -88,9 +61,7 @@ export const deleteProject = async (req: Request, res: Response) => {
 
 export const listProjects = async (_: Request, res: Response) => {
     try {
-        const projects = await prismaClient.project.findMany({
-            include: { members: true, tasks: true, },
-        });
+        const projects = await getProjects();
         res.status(200).json(projects);
     } catch (error) {
         res.sendStatus(500);
@@ -99,10 +70,7 @@ export const listProjects = async (_: Request, res: Response) => {
 
 export const listProjectById = async (req: Request, res: Response) => {
     try {
-        const project = await prismaClient.project.findUnique({
-            where: { id: req.params.projectId },
-            include: { members: true, tasks: true },
-        });
+        const project = await getProjectById(req.params.projectId);
         res.status(project ? 200 : 404).json(project || {});
     } catch (error) {
         res.sendStatus(500);
@@ -112,13 +80,13 @@ export const listProjectById = async (req: Request, res: Response) => {
 export const changeProjectById = async (req: Request, res: Response) => {
     try {
         const { name, description } = req.body;
-        const project = await prismaClient.project.update({
-            where: { id: req.params.projectId },
-            data: {
-                name,
-                description,
-            },
-        });
+        const { projectId } = req.params;
+
+        if (!(await existingProject(projectId))) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+
+        const project = await updateProjectInformation(projectId, name, description);
         res.status(200).json(project);
     } catch (error) {
         res.sendStatus(500);
@@ -128,47 +96,28 @@ export const changeProjectById = async (req: Request, res: Response) => {
 export const addMemberProject = async (req: Request, res: Response) => {
     try {
         const { projectId, memberId, userId } = req.body;
-
-        const project = await prismaClient.project.findUnique({
-            where: { id: projectId },
-        });
-
-        if (!project) {
+        if (!(await existingProject(projectId))) {
             return res.status(404).json({ error: 'Project not found' });
         }
-
-        const member = await prismaClient.user.findUnique({
-            where: { id: memberId },
-        });
-
-        if (!member) {
+        if (!(await existingUser(memberId))) {
             return res.status(404).json({ error: 'Member not found' });
         }
-
-        const user = await prismaClient.user.findUnique({
-            where: { id: userId },
-        });
-
-        if (!user) {
+        if (!(await existingUser(userId))) {
             return res.status(404).json({ error: 'User not found' });
         }
-
-        if (project.creatorId !== userId) {
+        if (!(await isProjectCreator(projectId, userId))) {
             return res
                 .status(403)
                 .json({ error: 'Only the project creator can perform this action' });
         }
-
-        await prismaClient.projectUser.create({
-            data: {
-                userId: memberId,
-                projectId,
-            },
-        });
-
+        const sucess = await addMemberInProject(projectId, memberId);
         res
-            .status(200)
-            .json({ message: `Member ${memberId} added to project ${projectId}` });
+            .status(sucess ? 200 : 503)
+            .json(
+                sucess
+                    ? { message: `Member ${memberId} added to project ${projectId}` }
+                    : {}
+            );
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
@@ -178,41 +127,26 @@ export const addMemberProject = async (req: Request, res: Response) => {
 export const removeMemberProject = async (req: Request, res: Response) => {
     const { projectId, memberId, userId } = req.body;
     try {
-        const project = await prismaClient.project.findUnique({
-            where: { id: projectId },
-        });
-
-        if (!project) {
+        if (!(await existingProject(projectId))) {
             return res.status(404).json({ error: 'Project not found' });
         }
-
-        const member = await prismaClient.user.findUnique({
-            where: { id: memberId },
-        });
-
-        if (!member) {
+        if (!(await existingUser(memberId))) {
             return res.status(404).json({ error: 'Member not found' });
         }
-
-        if (project.creatorId !== userId) {
+        if (!(await isProjectCreator(projectId, userId))) {
             return res
                 .status(403)
                 .json({ error: 'Only the project creator can perform this action' });
         }
+        const removed = await removeMember(projectId, memberId);
 
-        await prismaClient.projectUser.delete({
-            where: {
-                userId_projectId: {
-                    userId: memberId,
-                    projectId,
-                },
-            },
-        });
-
-        res.status(200)
-            .json({
-                message: `Member ${memberId} remodev from project ${projectId}`,
-            });
+        res.status(removed ? 200 : 503).json(
+            removed
+                ? {
+                    message: `Member ${memberId} remodev from project ${projectId}`,
+                }
+                : {}
+        );
     } catch (error) {
         res.sendStatus(500);
     }
