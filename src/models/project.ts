@@ -1,7 +1,7 @@
 import { ModelMember } from './member';
 import { ModelTasks } from './task';
 
-export interface ModelProject{
+export interface ModelProject {
   id: string;
   name: string;
   description: string;

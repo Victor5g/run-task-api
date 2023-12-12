@@ -1,10 +1,6 @@
 import { object, string, nativeEnum } from 'zod';
 
-enum TaskStatus {
-  PENDING = 'PENDING',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
+import { ModelTaskStatus } from '../models/task';
 
 export const createTaskSchema = object({
     body: object({
@@ -47,7 +43,7 @@ export const changeTaskSchema = object({
         description: string({
             required_error: 'description is required',
         }),
-        status: nativeEnum(TaskStatus),
+        status: nativeEnum(ModelTaskStatus),
         userId: string({
             required_error: 'user Id is required',
         }),

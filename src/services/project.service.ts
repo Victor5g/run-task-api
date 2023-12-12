@@ -35,7 +35,7 @@ export const getProjectById = async(projectId:string):Promise<ModelProjects | nu
     return project;
 };
 
-export const deleteProjectById = async(projectId:string) => {
+export const deleteProjectById = async(projectId:string):Promise<void> => {
     await prismaClient.projectUser.deleteMany({
         where: {
             projectId: projectId,
@@ -53,7 +53,7 @@ export const deleteProjectById = async(projectId:string) => {
     });
 };
 
-export const updateProjectInformation = async(projectId:string, name:string, description:string) => {
+export const updateProjectInformation = async(projectId:string, name:string, description:string):Promise<ModelProject> => {
     const project = await prismaClient.project.update({
         where: { id: projectId },
         data: { name, description, },
