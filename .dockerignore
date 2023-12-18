@@ -1,9 +1,8 @@
 node_modules
-
 Makefile
-
 README.md
-
+docker-compose.yml
+Dockerfile
 .editorconfig
-
 .gitignore
+.dockerignore
