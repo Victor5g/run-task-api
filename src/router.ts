@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { auth } from './middleware/auth';
 import { validate } from './middleware/validate';
 
 import {
@@ -52,35 +53,37 @@ import {
 const router = Router();
 
 router.post('/auth', validate(authUserSchema), authenticate);
-
-router.get('/users', listUsers);
-router.get('/user/:userId', validate(listUserSchema), listUserById);
 router.post('/user', validate(createUserSchema), createUser);
-router.delete('/user/:userId', validate(deleteUserSchema), deleteUser);
-router.put('/user/:userId', validate(changeUserSchema), changeUserById);
 
-router.get('/projects', listProjects);
-router.get('/project/:projectId', validate(listProjectSchema), listProjectById);
-router.post('/project', validate(createProjectSchema), createProject);
-router.delete('/project', validate(deleteProjectSchema), deleteProject);
+router.get('/users', auth, listUsers);
+router.get('/user/:userId', auth, validate(listUserSchema), listUserById);
+router.delete('/user/:userId', auth, validate(deleteUserSchema), deleteUser);
+router.put('/user/:userId', auth, validate(changeUserSchema), changeUserById);
+
+router.get('/projects', auth, listProjects);
+router.get('/project/:projectId', auth, validate(listProjectSchema), listProjectById);
+router.post('/project', auth, validate(createProjectSchema), createProject);
+router.delete('/project', auth, validate(deleteProjectSchema), deleteProject);
 router.put(
     '/project/:projectId',
+    auth,
     validate(updateProjectSchema),
     changeProjectById
 );
 
-router.post('/project/add-member', validate(addMemberSchema), addMemberProject);
+router.post('/project/add-member', auth, validate(addMemberSchema), addMemberProject);
 router.delete(
     '/project/remove-member',
+    auth,
     validate(removeMemberSchema),
     removeMemberProject
 );
 
-router.get('/tasks', listTasks);
-router.get('/task/:taskId', validate(listTaskSchema), listTaskById);
-router.post('/task', validate(createTaskSchema), createTask);
-router.put('/task/:taskId', validate(changeTaskSchema), changeTask);
-router.delete('/task', validate(deleteTaskSchema), deleteTask);
+router.get('/tasks', auth, listTasks);
+router.get('/task/:taskId', auth, validate(listTaskSchema), listTaskById);
+router.post('/task', auth, validate(createTaskSchema), createTask);
+router.put('/task/:taskId', auth, validate(changeTaskSchema), changeTask);
+router.delete('/task', auth, validate(deleteTaskSchema), deleteTask);
 
 router.all('*', (req: Request, res: Response) => {
     res.status(404).json({ message: `Route ${req.originalUrl} not found` });
