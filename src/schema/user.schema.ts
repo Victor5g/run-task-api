@@ -1,5 +1,16 @@
 import { object, string } from 'zod';
 
+export const authUserSchema = object({
+    body: object({
+        email: string({
+            required_error: 'Email address is required',
+        }).email('Invalid email address'),
+        password: string({
+            required_error: 'Password is required',
+        }).min(8, 'invalid password, at least 8 characters'),
+    }),
+});
+
 export const createUserSchema = object({
     body: object({
         name: string({
@@ -14,7 +25,6 @@ export const createUserSchema = object({
     }),
 });
 
-
 export const deleteUserSchema = object({
     params: object({
         userId: string({
@@ -22,7 +32,6 @@ export const deleteUserSchema = object({
         }),
     }),
 });
-
 
 export const listUserSchema = object({
     params: object({

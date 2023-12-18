@@ -100,3 +100,5 @@ export const isProjectCreator = async(projectId:string, userId:string): Promise<
 
     return project?.creatorId === userId;
 };
+
+prismaClient.$disconnect();

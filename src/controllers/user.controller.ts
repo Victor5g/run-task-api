@@ -1,6 +1,5 @@
+import { createHmac } from 'crypto';
 import { Request, Response } from 'express';
-
-import prismaClient from '../database/client';
 
 import {
     createNewUser,
@@ -13,7 +12,10 @@ import {
 export const createUser = async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body;
-        const user = await createNewUser(name, email, password);
+        const newPassword = createHmac('md5', password.split('').reverse().join(''))
+            .update(password)
+            .digest('hex');
+        const user = await createNewUser(name, email, newPassword);
         res.status(201).json(user);
     } catch (error) {
         res.sendStatus(500);
@@ -62,5 +64,3 @@ export const changeUserById = async (req: Request, res: Response) => {
         res.sendStatus(500);
     }
 };
-
-prismaClient.$disconnect();

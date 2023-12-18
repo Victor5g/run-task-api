@@ -103,3 +103,5 @@ export const deleteTaskById = async (taskId: string): Promise<void> => {
         where: { id: taskId },
     });
 };
+
+prismaClient.$disconnect();

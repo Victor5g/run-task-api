@@ -22,6 +22,13 @@ export const getUsers = async (): Promise<Array<ModelUser>> => {
     return users;
 };
 
+export const getUser = async (email?: string): Promise<ModelUser | null> => {
+    const user = await prismaClient.user.findUnique({
+        where: { email },
+    });
+    return user;
+};
+
 export const getUserById = async (
     userId: string
 ): Promise<ModelUser | null> => {
@@ -79,3 +86,5 @@ export const existingUserInProject = async (
     });
     return inProject ? true : false;
 };
+
+prismaClient.$disconnect();

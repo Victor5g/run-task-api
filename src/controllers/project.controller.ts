@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
 
-import prismaClient from '../database/client';
-
 import { existingUser } from '../services/user.service';
 import {
     existingProject,
@@ -141,5 +139,3 @@ export const removeMemberProject = async (req: Request, res: Response) => {
         res.sendStatus(500);
     }
 };
-
-prismaClient.$disconnect();
