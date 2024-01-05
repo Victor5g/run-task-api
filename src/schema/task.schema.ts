@@ -7,9 +7,6 @@ export const createTaskSchema = object({
         projectId: string({
             required_error: 'Project Id is required',
         }),
-        userId: string({
-            required_error: 'user Id is required',
-        }),
         title: string({
             required_error: 'title is required',
         }),
@@ -43,10 +40,7 @@ export const changeTaskSchema = object({
         description: string({
             required_error: 'description is required',
         }),
-        status: nativeEnum(ModelTaskStatus),
-        userId: string({
-            required_error: 'user Id is required',
-        }),
+        status: nativeEnum(ModelTaskStatus)
     }),
 });
 
@@ -54,9 +48,6 @@ export const deleteTaskSchema = object({
     body: object({
         taskId: string({
             required_error: 'task id is required',
-        }),
-        userId: string({
-            required_error: 'user id is required',
-        }),
+        })
     }),
 });

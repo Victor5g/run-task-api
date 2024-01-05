@@ -15,11 +15,11 @@ import {
 
 export const createProject = async (req: Request, res: Response) => {
     try {
-        const { name, description, userId } = req.body;
-        if (!(await existingUser(userId))) {
+        const { name, description, UserId } = req.body;
+        if (!(await existingUser(UserId))) {
             return res.status(404).json({ error: 'User not found' });
         }
-        const project = await createNewProject(name, description, userId);
+        const project = await createNewProject(name, description, UserId);
         res.status(201).json({ message: 'created project', project });
     } catch (error) {
         console.log(error);
@@ -29,14 +29,14 @@ export const createProject = async (req: Request, res: Response) => {
 
 export const deleteProject = async (req: Request, res: Response) => {
     try {
-        const { projectId, userId } = req.body;
+        const { projectId, UserId } = req.body;
         if (!(await existingProject(projectId))) {
             return res.status(404).json({ error: 'Project not found' });
         }
-        if (!(await existingUser(userId))) {
+        if (!(await existingUser(UserId))) {
             return res.status(404).json({ error: 'User not found' });
         }
-        if (!(await isProjectCreator(projectId, userId))) {
+        if (!(await isProjectCreator(projectId, UserId))) {
             return res
                 .status(403)
                 .json({ error: 'Only the project creator performs this action' });
@@ -84,17 +84,17 @@ export const changeProjectById = async (req: Request, res: Response) => {
 
 export const addMemberProject = async (req: Request, res: Response) => {
     try {
-        const { projectId, memberId, userId } = req.body;
+        const { projectId, memberId, UserId } = req.body;
         if (!(await existingProject(projectId))) {
             return res.status(404).json({ error: 'Project not found' });
         }
         if (!(await existingUser(memberId))) {
             return res.status(404).json({ error: 'Member not found' });
         }
-        if (!(await existingUser(userId))) {
+        if (!(await existingUser(UserId))) {
             return res.status(404).json({ error: 'User not found' });
         }
-        if (!(await isProjectCreator(projectId, userId))) {
+        if (!(await isProjectCreator(projectId, UserId))) {
             return res
                 .status(403)
                 .json({ error: 'Only the project creator can perform this action' });
@@ -114,7 +114,7 @@ export const addMemberProject = async (req: Request, res: Response) => {
 };
 
 export const removeMemberProject = async (req: Request, res: Response) => {
-    const { projectId, memberId, userId } = req.body;
+    const { projectId, memberId, UserId } = req.body;
     try {
         if (!(await existingProject(projectId))) {
             return res.status(404).json({ error: 'Project not found' });
@@ -122,7 +122,7 @@ export const removeMemberProject = async (req: Request, res: Response) => {
         if (!(await existingUser(memberId))) {
             return res.status(404).json({ error: 'Member not found' });
         }
-        if (!(await isProjectCreator(projectId, userId))) {
+        if (!(await isProjectCreator(projectId, UserId))) {
             return res
                 .status(403)
                 .json({ error: 'Only the project creator can perform this action' });

@@ -17,14 +17,14 @@ import { ModelTaskStatus } from '../models/task';
 
 export const createTask = async (req: Request, res: Response) => {
     try {
-        const { projectId, userId, title, description, tag } = req.body;
+        const { projectId, UserId, title, description, tag } = req.body;
 
         if (!(await existingProject(projectId))) {
             return res.status(404).json({ error: 'Project not found' });
         }
-        if (!(await existingUserInProject(projectId, userId))) {
+        if (!(await existingUserInProject(projectId, UserId))) {
             return res.status(403).json({
-                error: `user ${userId} is not part of the project ${projectId}`,
+                error: `user ${UserId} is not part of the project ${projectId}`,
             });
         }
         const task = await createNewTask(
@@ -69,13 +69,13 @@ export const listTaskById = async (req: Request, res: Response) => {
 export const changeTask = async (req: Request, res: Response) => {
     try {
         const { taskId } = req.params;
-        const { title, description, status, userId } = req.body;
+        const { title, description, status, UserId } = req.body;
         if (!(await existingTask(taskId))) {
             return res.status(404).json({ error: 'task not fount' });
         }
-        if (!(await memberRelatingProject(taskId, userId))) {
+        if (!(await memberRelatingProject(taskId, UserId))) {
             return res.status(403).json({
-                error: `user ${userId} is not part of the taks ${taskId}`,
+                error: `user ${UserId} is not part of the taks ${taskId}`,
             });
         }
         if (!(await isAllowedChange(taskId))) {
@@ -97,13 +97,13 @@ export const changeTask = async (req: Request, res: Response) => {
 
 export const deleteTask = async (req: Request, res: Response) => {
     try {
-        const { taskId, userId } = req.body;
-        if (!existingTask(taskId)) {
+        const { taskId, UserId } = req.body;
+        if (!await existingTask(taskId)) {
             return res.status(404).json({ error: 'task not fount' });
         }
-        if (!(await memberRelatingProject(taskId, userId))) {
+        if (!(await memberRelatingProject(taskId, UserId))) {
             return res.status(403).json({
-                error: `user ${userId} is not part of the taks ${taskId}`,
+                error: `user ${UserId} is not part of the taks ${taskId}`,
             });
         }
         if (!(await isAllowedChange(taskId))) {

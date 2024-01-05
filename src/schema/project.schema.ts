@@ -7,10 +7,7 @@ export const createProjectSchema = object({
         }),
         description: string({
             required_error: 'Description is required',
-        }),
-        userId: string({
-            required_error: 'Project userId is required',
-        }),
+        })
     }),
 });
 
@@ -42,10 +39,7 @@ export const deleteProjectSchema = object({
     body: object({
         projectId: string({
             required_error: 'project id is required',
-        }),
-        userId: string({
-            required_error: 'user id is required',
-        }),
+        })
     }),
 });
 
@@ -56,10 +50,7 @@ export const addMemberSchema = object({
         }),
         memberId: string({
             required_error: 'member id is required',
-        }),
-        userId: string({
-            required_error: 'user id is required',
-        }),
+        })
     }),
 });
 
@@ -70,9 +61,6 @@ export const removeMemberSchema = object({
         }),
         memberId: string({
             required_error: 'member id is required',
-        }),
-        userId: string({
-            required_error: 'user id is required',
-        }),
+        })
     }),
 });
