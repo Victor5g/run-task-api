@@ -11,10 +11,67 @@
 			"name": "User",
 			"item": [
 				{
+					"name": "AUTH USER",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();",
+									"let token = `Bearer ${response.token}`",
+									"pm.environment.set(\"token_jwt\", token)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ocytaclis.next@gmail.com\",\n    \"password\":\"OIG7$67Tri\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/auth",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"auth"
+							]
+						},
+						"description": "List all users registered in the database."
+					},
+					"response": []
+				},
+				{
 					"name": "LIST USERS",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"description": "User access token in the 'Bearer + $Access_Token' model\n",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://{{host}}/users",
 							"protocol": "http",
@@ -33,10 +90,16 @@
 					"name": "UPDATE USER",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"name\": \"Maltes\",\n        \"email\": \"teste7@gmail.com\",\n        \"password\": \"12345678\"\n}",
+							"raw": "{\n        \"name\": \"Maltes\",\n        \"email\": \"teste90@gmail.com\",\n        \"password\": \"12345678\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,14 +107,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/user/653d314a-1c52-4061-aa33-6f64862fdc40",
+							"raw": "http://{{host}}/user/a13fae84-1e3e-479a-a347-a5e93f010f8a",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"user",
-								"653d314a-1c52-4061-aa33-6f64862fdc40"
+								"a13fae84-1e3e-479a-a347-a5e93f010f8a"
 							]
 						},
 						"description": "Update user data registered in the database."
@@ -62,16 +125,22 @@
 					"name": "LIST USER BY ID",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://{{host}}/user/885d13d0-2683-4698-8911-5ef398ddb70a",
+							"raw": "http://{{host}}/user/cce56f8d-438f-40dc-8c5a-5a8a5bbe384c",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"user",
-								"885d13d0-2683-4698-8911-5ef398ddb70a"
+								"cce56f8d-438f-40dc-8c5a-5a8a5bbe384c"
 							]
 						},
 						"description": "List user data using ID as a filter."
@@ -85,7 +154,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"Mentildo\",\n    \"email\": \"teste7@gmail.com\",\n    \"password\":\"12345678\"\n}",
+							"raw": "{\n    \"name\":\"Nubior\",\n    \"email\": \"Nubior.next@gmail.com\",\n    \"password\":\"PPL$67Tri\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -110,16 +179,22 @@
 					"name": "DELETE USER",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://{{host}}/user/653d314a-1c52-4061-aa33-6f64862fdc40",
+							"raw": "http://{{host}}/user/95ddd126-3926-4fe8-b1b9-71bc1939ccaf",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"user",
-								"653d314a-1c52-4061-aa33-6f64862fdc40"
+								"95ddd126-3926-4fe8-b1b9-71bc1939ccaf"
 							]
 						},
 						"description": "Delete registered user using ID."
@@ -136,7 +211,13 @@
 					"name": "LIST PROJECTS",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://{{host}}/projects",
 							"protocol": "http",
@@ -155,16 +236,22 @@
 					"name": "LIST PROJECT BY ID",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://{{host}}/project/cdbc4503-6789-42ed-bade-e91cc250e517",
+							"raw": "http://{{host}}/project/1d9833ec-5df2-4c6d-bb39-69576703c008",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"project",
-								"cdbc4503-6789-42ed-bade-e91cc250e517"
+								"1d9833ec-5df2-4c6d-bb39-69576703c008"
 							]
 						},
 						"description": "Display data for a specific project identified by ID."
@@ -175,10 +262,16 @@
 					"name": "CREATE PROJECT",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"Tim Mesh\",\n    \"description\":\"Sistema de repetidores de banda larga\",\n    \"userId\":\"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"raw": "{\n    \"name\":\"Teste Membros\",\n    \"description\":\"Adicionar membros\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -203,10 +296,16 @@
 					"name": "ADD MEMBER IN PROJECT",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"projectId\":\"cdbc4503-6789-42ed-bade-e91cc250e517\",\n    \"memberId\":\"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"userId\": \"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"raw": "{\n    \"projectId\":\"1d9833ec-5df2-4c6d-bb39-69576703c008\",\n    \"memberId\":\"639cc5a7-301b-4484-864d-1cc12ec898fa\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -232,10 +331,16 @@
 					"name": "UPDATE PROJECT",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\":\"Algar Speed\",\n    \"description\":\"Sistema de controle de banda para clientes algar\"\n}",
+							"raw": "{\n    \"name\":\"Algar Consumers\",\n    \"description\":\"Sistema de controle de banda para clientes algar\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -243,14 +348,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/project/74c21b23-7d47-487a-877e-034fa303e50a",
+							"raw": "http://{{host}}/project/e2fa2260-c124-456e-8d1c-19bb2f965d50",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"project",
-								"74c21b23-7d47-487a-877e-034fa303e50a"
+								"e2fa2260-c124-456e-8d1c-19bb2f965d50"
 							]
 						},
 						"description": "Update project data using ID."
@@ -261,10 +366,16 @@
 					"name": "DELETE PROJECT",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"projectId\":\"74c21b23-7d47-487a-877e-034fa303e50a\",\n    \"userId\":\"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"raw": "{\n    \"projectId\":\"059ed2c3-b819-4a20-9fae-a93a49c168af\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -289,10 +400,16 @@
 					"name": "REMOVE MEMBER PROJECT",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"projectId\":\"cdbc4503-6789-42ed-bade-e91cc250e517\",\n    \"memberId\":\"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"userId\": \"48fc0d5d-4e0c-4d2e-ba83-24b71552f79c\"\n}",
+							"raw": "{\n    \"projectId\":\"1d9833ec-5df2-4c6d-bb39-69576703c008\",\n    \"memberId\": \"639cc5a7-301b-4484-864d-1cc12ec898fa\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -324,7 +441,13 @@
 					"name": "LIST TASKS",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://{{host}}/tasks",
 							"protocol": "http",
@@ -341,30 +464,24 @@
 				},
 				{
 					"name": "LIST TASK BY ID",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"projectId\": \"74c21b23-7d47-487a-877e-034fa303e50a\",\n    \"userId\": \"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"title\": \"Deploy na AWS com EC2\",\n    \"description\": \"realzar o deploy do app na aws EC2 com docker, NGIX e PostreSQL\",\n    \"tag\": \"DEVELOPER\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
 							}
-						},
+						],
 						"url": {
-							"raw": "http://{{host}}/task/9f290df7-415d-4759-85c9-f6ca273199b2",
+							"raw": "http://{{host}}/task/b13a86b9-6dfa-4c9b-98c1-298d6e5215fa",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"task",
-								"9f290df7-415d-4759-85c9-f6ca273199b2"
+								"b13a86b9-6dfa-4c9b-98c1-298d6e5215fa"
 							]
 						},
 						"description": "Lists the data of a task using the ID."
@@ -375,10 +492,16 @@
 					"name": "UPDATE TASK",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"Deploy na Vercel\",\n    \"description\": \"realzar o deploy do WEB Na vercel\",\n    \"status\": \"IN_PROGRESS\",\n    \"userId\": \"33f67187-3b7d-4e9c-b0a7-73d29f9004fc\"\n}",
+							"raw": "{\n    \"title\": \"Teste de integracao\",\n    \"description\": \"realzar a criacao dos teste\",\n    \"status\": \"DONE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -386,14 +509,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/task/d11c618a-b6ce-4609-af3b-0fdb08ca2290",
+							"raw": "http://{{host}}/task/6b1441de-fe15-461d-b80a-edc8bc4fbada",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"task",
-								"d11c618a-b6ce-4609-af3b-0fdb08ca2290"
+								"6b1441de-fe15-461d-b80a-edc8bc4fbada"
 							]
 						},
 						"description": "Update a task's data."
@@ -404,10 +527,16 @@
 					"name": "CREATE TASK",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"projectId\": \"cdbc4503-6789-42ed-bade-e91cc250e517\",\n    \"userId\": \"3e19a8a9-18cb-4abd-ac83-39181d565781\",\n    \"title\": \"Deploy na AWS com EC2\",\n    \"description\": \"realzar o deploy do app na aws EC2 com docker, NGIX e PostreSQL\",\n    \"tag\": \"DEVELOPER\"\n}",
+							"raw": "{\n    \"projectId\": \"1d9833ec-5df2-4c6d-bb39-69576703c008\",\n    \"title\": \"Escalonar infra CI/CD\",\n    \"description\": \"Contruir e habilitar a rotina de CI/CD\",\n    \"tag\": \"BUILD\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -432,10 +561,16 @@
 					"name": "DELETE TASK",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token_jwt}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"taskId\": \"c00af10d-6413-478a-9560-20125ced06a7\",\n    \"userId\": \"33f67187-3b7d-4e9c-b0a7-73d29f9004fc\"\n}",
+							"raw": "{\n    \"taskId\": \"d54e5daa-54d1-464f-9397-51196acf3cbc\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -458,6 +593,36 @@
 				}
 			],
 			"description": "Tasks of created projects"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzZTk4M2Y3LWIzY2EtNDIzYS1iZWMzLWY1OWI4NTFiOWUzZSIsImlhdCI6MTcwNDQ4MTk0NSwiZXhwIjoxNzA0NTY4MzQ1fQ._vTPKf2kaBGlSXf9bZ8gWIqrVwd0NR06B0lnSIA5OG4",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
