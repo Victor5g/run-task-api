@@ -6,3 +6,4 @@ Dockerfile
 .editorconfig
 .gitignore
 .dockerignore
+yarn.lock
